@@ -2,20 +2,28 @@ const Client = require('pg').Client;
 
 class DbPostgre {
 
+    constructor(clientData) {
+        
+        if (clientData) {
+            this.clientData = clientData;
+        } else {
+            this.clientData = {
+                user: "postgres",
+                password: "postgres",
+                host: "localhost",
+                port: 5432,
+                database: "mercearia_dev"
+            }
+        }
+        
+    }
+
     async client() {
 
-        var client = new Client({
-            user: "postgres",
-            password: "postgres",
-            host: "localhost",
-            port: 5432,
-            database: "mercearia_dev"
-        });
-        
+        var client = new Client(this.clientData);
         return client;
 
     }
-    
     
     async execute(sql) {
     
